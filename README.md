@@ -1,0 +1,1 @@
+Play/learn-ground for a bazel build of AliceO2.
