@@ -322,6 +322,7 @@ cc_library(
         "include/zmq.h",
         "include/zmq_utils.h",
     ],
+	includes = ["include"],
     visibility = ["//visibility:public"],
 )
 

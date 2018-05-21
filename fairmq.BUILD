@@ -26,10 +26,9 @@ cc_library(
     ]) + glob([
         "fairmq/zeromq/*.h",
     ]),
-    copts = ["-O2 -g -fPIC -std=c++11 -DNDEBUG -Iexternal/fairlogger"],
-    includes = ["fairmq","fairmq/tools"
-    ],
+    copts = ["-O2 -g -fPIC -std=c++11 -DNDEBUG -isystem external/fairmq -isystem external/fairmq/fairmq/tools"],
     visibility = ["//visibility:public"],
+    includes = ["fairmq"],
     deps = [
         "@boost//:algorithm",
         "@boost//:filesystem",
@@ -38,10 +37,13 @@ cc_library(
         "@boost//:asio",
         "@boost//:msm",
         "@boost//:process",
+        "@boost//:interprocess",
         "@boost//:serialization",
         "@boost//:uuid",
         "@boost//:signals2",
         "@boost//:proto",
-        "@fairlogger//:libFairLogger",
+        "@boost//:dll",
+        "@fairlogger//:FairLogger",
+        "@zmq//:zmq"
     ],
 )

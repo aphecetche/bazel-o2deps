@@ -1,7 +1,7 @@
 
 local_repository(
     name = "com_github_nelhage_rules_boost",
-    path = "/Users/laurent/github.com/nelhage/rules_boost",
+    path = "/Users/laurent/github.com/aphecetche/rules_boost",
 )
 
 load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
