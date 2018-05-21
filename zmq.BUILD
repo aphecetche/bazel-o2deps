@@ -1,3 +1,5 @@
+load("@//:zmq.bzl","zmq_test","zmq_test_unity")
+
 PLATFORM_HPP = """
 #ifndef __ZMQ_PLATFORM_HPP_INCLUDED__
 #define __ZMQ_PLATFORM_HPP_INCLUDED__
@@ -63,6 +65,8 @@ PLATFORM_HPP = """
 #if defined __QNXNTO__
   #define ZMQ_HAVE_QNXNTO
 #endif
+
+#define ZOB
 
 #if defined(sun) || defined(__sun)
   #define ZMQ_HAVE_SOLARIS
@@ -306,7 +310,8 @@ filegroup(
 		"src/yqueue.hpp",
 		"src/zap_client.hpp",
         "src/zmq_draft.h",
-        "src/tweetnacl.h"
+        "src/tweetnacl.h",
+		"src/tweetnacl.c"
     ],
 )
 
@@ -319,3 +324,87 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+	name="testcommonsources",
+	srcs=[":platform_hpp"]+["include/zmq.h"]
+)
+
+cc_library(
+	name="unity",
+	srcs=glob(["external/unity/*.h"])+glob(["external/unity/*.c"]),
+	includes=["external/unity"]
+)
+
+zmq_test("test_ancillaries")
+zmq_test("test_system")
+zmq_test("test_pair_inproc")
+zmq_test("test_pair_tcp")
+zmq_test("test_reqrep_inproc")
+zmq_test("test_hwm_pubsub")
+zmq_test("test_reqrep_device")
+zmq_test("test_sub_forward")
+zmq_test("test_invalid_rep")
+zmq_test("test_msg_flags")
+zmq_test("test_msg_ffn")
+zmq_test("test_term_endpoint")
+zmq_test("test_probe_router")
+zmq_test("test_stream")
+zmq_test("test_stream_empty")
+zmq_test("test_stream_disconnect")
+zmq_test("test_disconnect_inproc")
+zmq_test("test_unbind_inproc")
+zmq_test("test_unbind_wildcard")
+zmq_test("test_ctx_options")
+zmq_test("test_security_null")
+zmq_test("test_security_plain")
+zmq_test("test_iov")
+zmq_test("test_spec_req")
+zmq_test("test_spec_rep")
+zmq_test("test_spec_dealer")
+zmq_test("test_spec_router")
+zmq_test("test_spec_pushpull")
+zmq_test("test_req_correlate")
+zmq_test("test_req_relaxed")
+zmq_test("test_inproc_connect")
+zmq_test("test_issue_566")
+zmq_test("test_shutdown_stress")
+zmq_test("test_timeo")
+zmq_test("test_many_sockets")
+zmq_test("test_diffserv")
+zmq_test("test_connect_rid")
+zmq_test("test_xpub_nodrop")
+zmq_test("test_pub_invert_matching")
+zmq_test("test_setsockopt")
+zmq_test("test_heartbeats")
+zmq_test("test_atomics")
+zmq_test("test_capabilities")
+zmq_test("test_metadata")
+zmq_test("test_srcfd")
+zmq_test("test_stream_timeout")
+zmq_test("test_xpub_manual")
+zmq_test("test_xpub_welcome_msg")
+zmq_test("test_base85")
+zmq_test("test_sodium")
+
+zmq_test_unity("test_bind_after_connect_tcp")
+zmq_test_unity("test_connect_resolve")
+zmq_test_unity("test_last_endpoint")
+zmq_test_unity("test_bind_src_address")
+zmq_test_unity("test_router_handover")
+zmq_test_unity("test_reconnect_ivl")
+zmq_test_unity("test_xpub_verbose")
+zmq_test_unity("test_reqrep_tcp")
+zmq_test_unity("test_ctx_destroy")
+zmq_test_unity("test_sockopt_hwm")
+zmq_test_unity("test_conflate")
+zmq_test_unity("test_socket_null")
+zmq_test_unity("test_hwm")
+zmq_test_unity("test_router_mandatory")
+zmq_test_unity("test_immediate")
+
+# long one ?
+zmq_test("test_security_zap",["tests/testutil_security.hpp"])
+
+
+zmq_test("test_monitor",["tests/testutil_security.hpp"])
