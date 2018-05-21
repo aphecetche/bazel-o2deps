@@ -7,23 +7,13 @@ load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 
 boost_deps()
 
-MS_GSL_BUILD = """
-cc_library(
-    name = "ms_gsl",
-    hdrs = glob(["include/gsl/*.h"]),
-    includes = ["include"],
-    visibility=["//visibility:public"],
-)
-"""
-
 new_http_archive(
     name = "ms_gsl",
-    build_file_content = MS_GSL_BUILD,
+    build_file = "BUILD.ms_gsl",
     sha256 = "9694b04cd78e5b1a769868f19fdd9eea2002de3d4c3a81a1b769209364543c36",
     strip_prefix = "GSL-1.0.0",
     urls = ["https://github.com/Microsoft/GSL/archive/v1.0.0.tar.gz"],
 )
-
 
 new_http_archive(
     name = "fairlogger",
