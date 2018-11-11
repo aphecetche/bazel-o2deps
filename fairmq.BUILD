@@ -47,3 +47,23 @@ cc_library(
         "@zmq//:zmq"
     ],
 )
+
+cc_binary(
+    name="testhelper_runTestDevice",
+    srcs=[
+    "test/helper/runTestDevice.cxx",
+    "test/helper/devices/TestPairLeft.cxx",
+    "test/helper/devices/TestPairRight.cxx",
+    "test/helper/devices/TestPollIn.cxx",
+    "test/helper/devices/TestPollOut.cxx",
+    "test/helper/devices/TestPub.cxx",
+    "test/helper/devices/TestPull.cxx",
+    "test/helper/devices/TestPush.cxx",
+    "test/helper/devices/TestRep.cxx",
+    "test/helper/devices/TestReq.cxx",
+    "test/helper/devices/TestSub.cxx",
+    "test/helper/devices/TestTransferTimeout.cxx"],
+    includes=[".","test/helper"],
+    # copts=["-isystem external/fairmq","-I external/fairmq/test/helper"],
+    deps=[":FairMQ"]
+)
